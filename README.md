@@ -14,7 +14,7 @@ Alt du må gjøre er å velge et knippe punkter og trykke på "Tegn rute".
 
 Ved å trykke på "Fjern markører" kan du slette punktene du har valgt og velge ny, for deretter å tegne en ny rute.
 
-## Det betyr at du kan lage kompliserte tegninger med flere usammenhengende deler!
+> Det betyr at du kan lage kompliserte tegninger med flere usammenhengende deler!
 
 Se for eksempel denne anden, i nærheten av Amsterdam:
 
@@ -35,3 +35,5 @@ Se for eksempel denne anden, i nærheten av Amsterdam:
 ## Vi har også dark mode 😎
 
 ![europe cat](assets/europe_cat.png)
+
+Trykk "Bytt tema" for å bytte mellom.
