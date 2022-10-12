@@ -2,7 +2,6 @@
   "name": "geokunst",
   "version": "0.1.0",
   "private": true,
-  "homepage": "/geokunst",
   "dependencies": {
     "@arcgis/core": "^4.24.7",
     "@emotion/react": "^11.10.4",

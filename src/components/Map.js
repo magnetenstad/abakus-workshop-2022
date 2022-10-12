@@ -2,7 +2,7 @@ import React, { useRef, useContext, useEffect } from 'react';
 import { AppContext } from '../state/context';
 
 import Locate from '@arcgis/core/widgets/Locate';
-// import esriConfig from '@arcgis/core/config.js';
+import esriConfig from '@arcgis/core/config.js';
 import MapView from '@arcgis/core/views/MapView';
 import Map from '@arcgis/core/Map';
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
@@ -13,8 +13,8 @@ import Graphic from '@arcgis/core/Graphic';
 import '../App.css';
 
 const MapComponent = () => {
-  // // Required: Set this property to insure assets resolve correctly.
-  // esriConfig.assetsPath = '/geokunst/assets';
+  // Required: Set this property to insure assets resolve correctly.
+  esriConfig.assetsPath = './assets';
   const mapDiv = useRef(null);
   const context = useContext(AppContext);
 
