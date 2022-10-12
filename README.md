@@ -37,3 +37,7 @@ Se for eksempel denne anden, i nærheten av Amsterdam:
 ![europe cat](assets/europe_cat.png)
 
 Trykk "Bytt tema" for å bytte mellom.
+
+## Bakgrunn for prosjektet
+
+GEOkunst er et resultat av et par timer arbeid på en [workshop](https://abakus.no/events/3249) med [Geodata](https://www.geodata.no/). Geodata stod for API og et React-skjelett. [Hans-Marius](https://github.com/hansmariusoveras) og [Magne](https://github.com/magnetenstad) kom opp med idéen, og ferdigstilte applikasjonen. (Vi tar gjerne imot tilbud om intervju til sommerjobb 2023 😇).
