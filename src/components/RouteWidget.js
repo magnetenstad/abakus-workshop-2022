@@ -32,7 +32,9 @@ const RouteWidget = () => {
       // Hint: grafikken legges til MapView
       const mapView = context.mapView.value;
 
-      mapView.graphics.removeAll();
+      mapView.graphics = mapView.graphics.filter(
+        (r) => r.attributes?.name != 'route'
+      );
 
       const route = result.data.routeResults[0].route;
 

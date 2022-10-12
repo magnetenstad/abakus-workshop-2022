@@ -4,9 +4,12 @@ import { AppContext } from '../state/context';
 import Locate from '@arcgis/core/widgets/Locate';
 import esriConfig from '@arcgis/core/config.js';
 import MapView from '@arcgis/core/views/MapView';
+import Popup from '@arcgis/core/widgets/Popup';
 import Map from '@arcgis/core/Map';
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
 import PopupTemplate from '@arcgis/core/PopupTemplate';
+import SimpleMarkerSymbol from '@arcgis/core/symbols/SimpleMarkerSymbol';
+import Graphic from '@arcgis/core/Graphic';
 
 import '../App.css';
 
@@ -89,11 +92,35 @@ const MapComponent = () => {
         });
         mapView.ui.add(locateWidget, 'top-left');
         context.mapView.set(mapView);
+        mapView.popup.autoOpenEnabled = false;
+        mapView.on('click', (e) => {
+          context.point.set({
+            type: 'point',
+            latitude: e.mapPoint.latitude,
+            longitude: e.mapPoint.longitude,
+          });
+        });
       });
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (!context.mapView.value || !context.point.value) return;
+
+    const markerSymbol = new SimpleMarkerSymbol({});
+    const pointGraphic = new Graphic({
+      geometry: context.point.value,
+      symbol: markerSymbol,
+      id: 'startMarker',
+    });
+    const filtered = context.mapView.value.graphics.filter(
+      (s) => s.id != 'startMarker'
+    );
+    context.mapView.value.graphics = filtered;
+    context.mapView.value.graphics.add(pointGraphic);
+  }, [context.point]);
 
   return <div className="mapDiv" ref={mapDiv}></div>;
 };

@@ -1,8 +1,10 @@
-import Query from "@arcgis/core/rest/support/Query";
-import * as route from "@arcgis/core/rest/route";
-import FeatureSet from "@arcgis/core/rest/support/FeatureSet";
-import RouteParameters from "@arcgis/core/rest/support/RouteParameters";
-import Graphic from "@arcgis/core/Graphic";
+'use strict';
+
+import Query from '@arcgis/core/rest/support/Query';
+import * as route from '@arcgis/core/rest/route';
+import FeatureSet from '@arcgis/core/rest/support/FeatureSet';
+import RouteParameters from '@arcgis/core/rest/support/RouteParameters';
+import Graphic from '@arcgis/core/Graphic';
 
 function shuffle(a) {
   for (let i = a.length - 1; i > 0; i--) {
@@ -14,13 +16,14 @@ function shuffle(a) {
 
 const getRandomRoute = (point, radius, context) => {
   return new Promise((resolve, reject) => {
-    const routeService = "https://route.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World";
+    const routeService =
+      'https://route.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World';
     const query = new Query();
     query.returnGeometry = true;
     query.geometry = point;
     query.distance = radius;
-    query.units = "kilometers";
-    query.outFields = ["*"];
+    query.units = 'kilometers';
+    query.outFields = ['*'];
     context.featureLayer.value.queryFeatures(query).then(async (results) => {
       console.log(results);
       const routeUrl = routeService;
@@ -32,25 +35,29 @@ const getRandomRoute = (point, radius, context) => {
 
       var routeParams = new RouteParameters({
         stops: new FeatureSet({
-          features: [fromGraphic, shuffledArray[0], shuffledArray[1], fromGraphic] // Pass the array of graphics
+          features: [
+            fromGraphic,
+            shuffledArray[0],
+            shuffledArray[1],
+            fromGraphic,
+          ], // Pass the array of graphics
         }),
-        returnDirections: false
+        returnDirections: false,
       });
 
       try {
         const data = await route.solve(routeUrl, routeParams);
         // Display the route
-        resolve(
-          {
-            data: data,
-            point1: shuffledArray[0],
-            point2: shuffledArray[1]
-          });
+        resolve({
+          data: data,
+          point1: shuffledArray[0],
+          point2: shuffledArray[1],
+        });
       } catch (error) {
         resolve([]);
       }
     });
   });
-}
+};
 
 export default getRandomRoute;
