@@ -5,7 +5,6 @@ import UploadAndDisplayImage from './UploadImage';
 
 import '../App.css';
 import { getDrawnRoute } from '../utils/routeUtils';
-import { maxWidth } from '@mui/system';
 
 const RouteWidget = () => {
   const context = useContext(AppContext);
@@ -55,7 +54,7 @@ const RouteWidget = () => {
           onClick={() => {
             context.mapView.value.graphics =
               context.mapView.value.graphics.filter(
-                (r) => r.attributes?.name != 'route'
+                (r) => r.attributes?.name !== 'route'
               );
           }}
         >

@@ -1,4 +1,4 @@
-import React, { useRef, useContext, useEffect, useState } from 'react';
+import React, { useRef, useContext, useEffect } from 'react';
 import { AppContext } from '../state/context';
 
 import Locate from '@arcgis/core/widgets/Locate';
@@ -120,7 +120,7 @@ const MapComponent = () => {
   useEffect(() => {
     if (!context.mapView.value || !context.points.value) return;
     context.mapView.value.graphics = context.mapView.value.graphics.filter(
-      (s) => s.id != 'pointMarker'
+      (s) => s.id !== 'pointMarker'
     );
     for (const point of context.points.value) {
       const markerSymbol = new SimpleMarkerSymbol({});
@@ -131,7 +131,7 @@ const MapComponent = () => {
       });
       context.mapView.value.graphics.add(pointGraphic);
     }
-  }, [context.points.value, context.basemapIndex.value]);
+  }, [context.points.value, context.basemapIndex.value, context.mapView.value]);
 
   return <div className="mapDiv" ref={mapDiv}></div>;
 };
