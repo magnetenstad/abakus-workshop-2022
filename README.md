@@ -4,28 +4,34 @@ Du har sikkert hørt om [trenden](https://www.aftenposten.no/amagasinet/i/0ne9LB
 
 > Med GEOkunst kan hvem som helst tegne sine egne ruter, som tilfredsstiller den figuren man måtte ønske.
 
-![europe cat](assets/europe_cat.png)
+![flower](assets/flower.png)
+
+Har du sett at det ligger en blomst over London?
 
 ## Velg punkter og lag en veitegning
 
-Alt du må gjøre er å velge et knippe punkter og trykke på "Finn rute".
+Alt du må gjøre er å velge et knippe punkter og trykke på "Tegn rute".
 
 Ved å trykke på "Fjern markører" kan du slette punktene du har valgt og velge ny, for deretter å tegne en ny rute.
 
 ## Det betyr at du kan lage kompliserte tegninger med flere usammenhengende deler!
 
-Se for eksempel dette fantastiske eksempelet:
+Se for eksempel denne anden, i nærheten av Amsterdam:
 
-![man](assets/man.png)
+![duck](assets/duck.png)
 
 ## Dessuten kan man laste opp et bilde for å enklere se hvor man skal sette punkter!
 
 <div style="display: flex; flex-direction: row;">
-  <img src="assets/hm0.png" width="20%">
-  <img src="assets/hm1.png" width="40%">
-  <img src="assets/hm2.png" width="20%">
+  <img src="assets/hm0.png" width="24%">
+  <img src="assets/hm1.png" width="49%">
+  <img src="assets/hm2.png" width="24%">
 </div>
 
 ## Kanskje du vil kjøre GEODATA på langs i Europa i sommer?
 
 ![geodata](assets/geodata.png)
+
+## Vi har også dark mode 😎
+
+![europe cat](assets/europe_cat.png)
