@@ -1,6 +1,7 @@
 import React, { useRef, useContext, useEffect } from 'react';
 import { AppContext } from '../state/context';
 
+import Locate from '@arcgis/core/widgets/Locate';
 import esriConfig from '@arcgis/core/config.js';
 import MapView from '@arcgis/core/views/MapView';
 import Map from '@arcgis/core/Map';
@@ -82,8 +83,15 @@ const MapComponent = () => {
         // extent(valgfritt, men lurt å ha med)
       }).when((mapView) => {
         // Når kartet er initialisert kan vi manipulre dataen her
+        var locateWidget = new Locate({
+          view: mapView,
+          scale: 1000,
+        });
+        mapView.ui.add(locateWidget, 'top-left');
+        context.mapView.set(mapView);
       });
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
