@@ -20,9 +20,11 @@ Se for eksempel dette fantastiske eksempelet:
 
 ## Dessuten kan man laste opp et bilde for å enklere se hvor man skal sette punkter!
 
-<img src="assets/hm0.png" width="24%">
-<img src="assets/hm1.png" width="49%">
-<img src="assets/hm2.png" width="24%">
+<div style="display: flex; flex-direction: row;">
+  <img src="assets/hm0.png" width="20%">
+  <img src="assets/hm1.png" width="40%">
+  <img src="assets/hm2.png" width="20%">
+</div>
 
 ## Kanskje du vil kjøre GEODATA på langs i Europa i sommer?
 
