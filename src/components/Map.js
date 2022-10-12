@@ -1,4 +1,4 @@
-import React, { useRef, useContext, useEffect } from 'react';
+import React, { useRef, useContext, useEffect, useState } from 'react';
 import { AppContext } from '../state/context';
 
 import Locate from '@arcgis/core/widgets/Locate';
@@ -25,8 +25,12 @@ const MapComponent = () => {
       // Konstruktøren er allerede i koden, men vi må velge bakgrunnskartet
       // En liste med valg finner vi i API dokumentasjonen:
       // https://developers.arcgis.com/javascript/latest/api-reference/esri-Map.html#basemap
+      const basemap = ['arcgis-streets', 'arcgis-streets-night'][
+        context.basemapIndex.value % 2
+      ];
+
       const map = new Map({
-        basemap: 'arcgis-streets-night',
+        basemap,
       });
 
       // Vi ønsker så å hente data som vi kan legge til i kartet.
@@ -111,7 +115,7 @@ const MapComponent = () => {
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [context.basemapIndex.value]);
 
   useEffect(() => {
     if (!context.mapView.value || !context.points.value) return;
@@ -127,7 +131,7 @@ const MapComponent = () => {
       });
       context.mapView.value.graphics.add(pointGraphic);
     }
-  }, [context.points]);
+  }, [context.points.value, context.basemapIndex.value]);
 
   return <div className="mapDiv" ref={mapDiv}></div>;
 };

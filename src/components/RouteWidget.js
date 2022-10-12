@@ -1,81 +1,42 @@
 import React, { useState, useContext } from 'react';
 import { AppContext } from '../state/context';
 import { MenuItem, TextField, Button } from '@mui/material';
+import UploadAndDisplayImage from './UploadImage';
 
 import '../App.css';
-import getRandomRoute from '../utils/routeUtils';
+import { getDrawnRoute } from '../utils/routeUtils';
 
 const RouteWidget = () => {
   const context = useContext(AppContext);
 
-  const [length, setLength] = useState(0); // Lengde på kalkulert rute
-  const [radius, setRadius] = useState(1.5); // Radius rundt brukerens posisjon
   const isMobile = navigator.userAgent.match(
     /Mobile|Windows Phone|Lumia|Android|webOS|iPhone|iPod|Blackberry|PlayBook|BB10|Opera Mini|\bCrMo\/|Opera Mobi/i
   );
 
-  // Kalkuler ca antall skritt basert på rutens lengde
-  const getSteps = (length) => {
-    return Math.floor(length * 1400);
-  };
-
-  const getLength = (radius) => {
-    return radius / 5000;
-  };
-
   // Finn rute
   const getRoute = () => {
-    const point = context.point.value;
-
-    getRandomRoute(point, radius, context).then((result) => {
-      // Vi trenger å fjerne gamle ruter før vi legger til nye
-      // Hint: grafikken legges til MapView
+    getDrawnRoute(context).then((result) => {
       const mapView = context.mapView.value;
-      /*mapView.graphics = mapView.graphics.filter(
-        (r) => r.attributes?.name != 'route'
-      );*/
-
       const route = result.data.routeResults[0].route;
 
       route.attributes.name = 'route';
       route.symbol = {
         type: 'simple-line',
-        color: 'white',
+        color: context.basemapIndex.value ? 'white' : 'black',
         width: 3,
       };
 
       mapView.graphics.add(route);
-      setLength(route.attributes.Total_Kilometers);
     });
   };
 
   return (
     <div className={isMobile ? 'widgetContainerMobile' : 'widgetContainer'}>
-      Hvor mange skritt vil du gå idag?
-      <div style={{ margin: '20px' }}>
-        <TextField
-          id="select"
-          label="Skritt"
-          value={radius}
-          select
-          onChange={(e) => setRadius(e.target.value)}
-        >
-          {[2500, 5000, 7500, 10000, 100000].map((option) => (
-            <MenuItem key={getLength(option)} value={getLength(option)}>
-              {option}
-            </MenuItem>
-          ))}
-        </TextField>
-      </div>
+      <p>Trykk på kartet for å tegne en rute!</p>
+
       <Button variant="contained" color="primary" onClick={() => getRoute()}>
         Finn rute
       </Button>
-      {length > 0 && (
-        <div style={{ padding: '10px' }}>
-          <div>{length.toFixed(1)} kilometer</div>
-          <div>~ {getSteps(length)} skritt</div>
-        </div>
-      )}
       <Button onClick={() => context.points.set([])}>Fjern markører</Button>
       <Button
         onClick={() => {
@@ -87,6 +48,10 @@ const RouteWidget = () => {
       >
         Fjern stier
       </Button>
+      <Button onClick={() => context.basemapIndex.set((i) => i + 1)}>
+        Bytt tema
+      </Button>
+      <UploadAndDisplayImage />
     </div>
   );
 };
