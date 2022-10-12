@@ -31,10 +31,9 @@ const RouteWidget = () => {
       // Vi trenger å fjerne gamle ruter før vi legger til nye
       // Hint: grafikken legges til MapView
       const mapView = context.mapView.value;
-
-      mapView.graphics = mapView.graphics.filter(
+      /*mapView.graphics = mapView.graphics.filter(
         (r) => r.attributes?.name != 'route'
-      );
+      );*/
 
       const route = result.data.routeResults[0].route;
 
@@ -77,6 +76,17 @@ const RouteWidget = () => {
           <div>~ {getSteps(length)} skritt</div>
         </div>
       )}
+      <Button onClick={() => context.points.set([])}>Fjern markører</Button>
+      <Button
+        onClick={() => {
+          context.mapView.value.graphics =
+            context.mapView.value.graphics.filter(
+              (r) => r.attributes?.name != 'route'
+            );
+        }}
+      >
+        Fjern stier
+      </Button>
     </div>
   );
 };

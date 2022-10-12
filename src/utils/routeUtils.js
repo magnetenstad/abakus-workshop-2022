@@ -15,7 +15,7 @@ function shuffle(a) {
 }
 
 const getRandomRoute = (point, radius, context) => {
-  return new Promise((resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
     const routeService =
       'https://route.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World';
     const query = new Query();
@@ -24,39 +24,28 @@ const getRandomRoute = (point, radius, context) => {
     query.distance = radius;
     query.units = 'kilometers';
     query.outFields = ['*'];
-    context.featureLayer.value.queryFeatures(query).then(async (results) => {
-      console.log(results);
-      const routeUrl = routeService;
-      const fromGraphic = new Graphic({
-        geometry: point,
-      });
+    const routeUrl = routeService;
 
-      const shuffledArray = shuffle(results.features);
-
-      var routeParams = new RouteParameters({
-        stops: new FeatureSet({
-          features: [
-            fromGraphic,
-            shuffledArray[0],
-            shuffledArray[1],
-            fromGraphic,
-          ], // Pass the array of graphics
-        }),
-        returnDirections: false,
-      });
-
-      try {
-        const data = await route.solve(routeUrl, routeParams);
-        // Display the route
-        resolve({
-          data: data,
-          point1: shuffledArray[0],
-          point2: shuffledArray[1],
-        });
-      } catch (error) {
-        resolve([]);
-      }
+    const graphics = [];
+    for (var i = 0; i < context.points.value.length; i++) {
+      graphics.push(new Graphic({ geometry: context.points.value[i] }));
+    }
+    var routeParams = new RouteParameters({
+      stops: new FeatureSet({
+        features: graphics, // Pass the array of graphics
+      }),
+      returnDirections: false,
     });
+
+    try {
+      const data = await route.solve(routeUrl, routeParams);
+      // Display the route
+      resolve({
+        data: data,
+      });
+    } catch (error) {
+      resolve([]);
+    }
   });
 };
 

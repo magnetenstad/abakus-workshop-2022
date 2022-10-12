@@ -4,7 +4,6 @@ import { AppContext } from '../state/context';
 import Locate from '@arcgis/core/widgets/Locate';
 import esriConfig from '@arcgis/core/config.js';
 import MapView from '@arcgis/core/views/MapView';
-import Popup from '@arcgis/core/widgets/Popup';
 import Map from '@arcgis/core/Map';
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
 import PopupTemplate from '@arcgis/core/PopupTemplate';
@@ -50,7 +49,7 @@ const MapComponent = () => {
 
       // Hent dataen
       const featureLayer = new FeatureLayer({
-        url: 'https://services-eu1.arcgis.com/zci5bUiJ8olAal7N/arcgis/rest/services/OSM_Tourism_EU/FeatureServer/0',
+        url: 'https://services-eu1.arcgis.com/zci5bUiJ8olAal7N/ArcGIS/rest/services/OSM_AF_Educational/FeatureServer',
         popupEnabled: true,
         popUpTemplate,
       });
@@ -94,11 +93,19 @@ const MapComponent = () => {
         context.mapView.set(mapView);
         mapView.popup.autoOpenEnabled = false;
         mapView.on('click', (e) => {
-          context.point.set({
-            type: 'point',
-            latitude: e.mapPoint.latitude,
-            longitude: e.mapPoint.longitude,
-          });
+          // context.point.set({
+          //   type: 'point',
+          //   latitude: e.mapPoint.latitude,
+          //   longitude: e.mapPoint.longitude,
+          // });
+          context.points.set((points) => [
+            {
+              type: 'point',
+              latitude: e.mapPoint.latitude,
+              longitude: e.mapPoint.longitude,
+            },
+            ...points,
+          ]);
         });
       });
     }
@@ -107,20 +114,20 @@ const MapComponent = () => {
   }, []);
 
   useEffect(() => {
-    if (!context.mapView.value || !context.point.value) return;
-
-    const markerSymbol = new SimpleMarkerSymbol({});
-    const pointGraphic = new Graphic({
-      geometry: context.point.value,
-      symbol: markerSymbol,
-      id: 'startMarker',
-    });
-    const filtered = context.mapView.value.graphics.filter(
-      (s) => s.id != 'startMarker'
+    if (!context.mapView.value || !context.points.value) return;
+    context.mapView.value.graphics = context.mapView.value.graphics.filter(
+      (s) => s.id != 'pointMarker'
     );
-    context.mapView.value.graphics = filtered;
-    context.mapView.value.graphics.add(pointGraphic);
-  }, [context.point]);
+    for (const point of context.points.value) {
+      const markerSymbol = new SimpleMarkerSymbol({});
+      const pointGraphic = new Graphic({
+        geometry: point,
+        symbol: markerSymbol,
+        id: 'pointMarker',
+      });
+      context.mapView.value.graphics.add(pointGraphic);
+    }
+  }, [context.points]);
 
   return <div className="mapDiv" ref={mapDiv}></div>;
 };

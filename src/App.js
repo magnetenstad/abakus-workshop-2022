@@ -18,11 +18,13 @@ function App() {
     latitude: 63.4305,
     longitude: 10.45,
   });
+  const [points, setPoints] = useState([]);
 
   const store = {
     mapView: { value: mapView, set: setMapView },
     featureLayer: { value: featureLayer, set: setFeatureLayer },
     point: { value: point, set: setPoint },
+    points: { value: points, set: setPoints },
   };
 
   return (
