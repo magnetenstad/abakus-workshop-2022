@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { AppContext } from '../state/context';
 
 const UploadAndDisplayImage = () => {
@@ -8,7 +8,8 @@ const UploadAndDisplayImage = () => {
     <div>
       <input
         type="file"
-        name="myImage"
+        name="my-image"
+        text="test"
         onChange={(event) => {
           context.image.set(event.target.files[0]);
         }}
